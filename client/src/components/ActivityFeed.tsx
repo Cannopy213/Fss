@@ -13,7 +13,7 @@ interface Activity {
 }
 
 export function ActivityFeed() {
-  const { data: activities = [], isLoading } = useQuery({
+  const { data: activities = [], isLoading } = useQuery<Activity[]>({
     queryKey: ['/api/activities'],
   });
 
@@ -45,7 +45,8 @@ export function ActivityFeed() {
 
   const formatTimeAgo = (date: Date) => {
     const now = new Date();
-    const diffInHours = Math.floor((now.getTime() - date.getTime()) / (1000 * 60 * 60));
+    const dateObj = new Date(date);
+    const diffInHours = Math.floor((now.getTime() - dateObj.getTime()) / (1000 * 60 * 60));
     
     if (diffInHours < 1) {
       return "منذ أقل من ساعة";
@@ -86,7 +87,7 @@ export function ActivityFeed() {
     }
   ];
 
-  const displayActivities = activities.length > 0 ? activities : mockActivities;
+  const displayActivities: Activity[] = activities.length > 0 ? activities : mockActivities;
 
   return (
     <Card>
