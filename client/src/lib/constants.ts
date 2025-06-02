@@ -114,7 +114,8 @@ export const FAMILY_SAVER_ABI = [
 ];
 
 // Default contract address - update this after deploying to Web5Layer
-export const DEFAULT_CONTRACT_ADDRESS = "0x5FbDB2315678afecb367f032d93F642f64180aa3";
+// Replace this with your deployed contract address on Web5Layer
+export const DEFAULT_CONTRACT_ADDRESS = "0x5FbDB2315678afecb367f032d93F642f64180aa3"; // Update after deployment
 
 // Network configuration
 export const NETWORKS = {
