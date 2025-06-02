@@ -113,11 +113,17 @@ export const FAMILY_SAVER_ABI = [
   }
 ];
 
-// Default contract address for local development
+// Default contract address - update this after deploying to Web5Layer
 export const DEFAULT_CONTRACT_ADDRESS = "0x5FbDB2315678afecb367f032d93F642f64180aa3";
 
 // Network configuration
 export const NETWORKS = {
+  web5layer: {
+    chainId: 8984, // Web5Layer actual chain ID
+    name: "Web5Layer",
+    rpcUrl: "https://rpc.web5layer.xyz",
+    blockExplorer: "https://explorer.web5layer.xyz"
+  },
   localhost: {
     chainId: 31337,
     name: "Localhost",
