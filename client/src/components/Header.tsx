@@ -1,13 +1,34 @@
-import { Wallet, PiggyBank } from "lucide-react";
+import { Wallet, PiggyBank, Globe } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
 import { useWallet } from "@/hooks/useWallet";
+import { web3Service } from "@/lib/web3";
+import { useState, useEffect } from "react";
 
 export function Header() {
   const { isConnected, address, isConnecting, connectWallet } = useWallet();
+  const [currentNetwork, setCurrentNetwork] = useState<{ chainId: number; name: string } | null>(null);
 
   const formatAddress = (addr: string) => {
     return `${addr.slice(0, 6)}...${addr.slice(-4)}`;
   };
+
+  useEffect(() => {
+    const fetchNetwork = async () => {
+      if (isConnected && web3Service.isConnected()) {
+        try {
+          const network = await web3Service.getCurrentNetwork();
+          setCurrentNetwork(network);
+        } catch (error) {
+          console.warn("Could not fetch network:", error);
+        }
+      } else {
+        setCurrentNetwork(null);
+      }
+    };
+
+    fetchNetwork();
+  }, [isConnected]);
 
   return (
     <header className="bg-white shadow-sm border-b">
@@ -23,6 +44,17 @@ export function Header() {
 
           {/* Wallet Connection */}
           <div className="flex items-center space-x-4 space-x-reverse">
+            {/* Network Display */}
+            {currentNetwork && (
+              <Badge 
+                variant={currentNetwork.name === "Web5Layer" ? "default" : "secondary"}
+                className={`${currentNetwork.name === "Web5Layer" ? "bg-primary text-white" : ""}`}
+              >
+                <Globe className="w-3 h-3 ml-1" />
+                {currentNetwork.name}
+              </Badge>
+            )}
+            
             {isConnected && address && (
               <div className="hidden md:flex items-center space-x-3 space-x-reverse bg-gray-100 rounded-lg px-3 py-2">
                 <div className="w-2 h-2 bg-success rounded-full animate-pulse"></div>

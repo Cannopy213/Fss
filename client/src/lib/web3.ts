@@ -143,7 +143,7 @@ export class Web3Service {
     }
 
     try {
-      const amountWei = ethers.utils.parseEther(amountEth);
+      const amountWei = parseEther(amountEth);
       const tx = await this.contract.contribute(goalId, { value: amountWei });
       await tx.wait();
       
@@ -189,7 +189,7 @@ export class Web3Service {
       const goalIds = await this.contract.getUserGoals(address);
       return {
         success: true,
-        goalIds: goalIds.map((id: ethers.BigNumber) => id.toNumber())
+        goalIds: goalIds.map((id: bigint) => Number(id))
       };
     } catch (error: any) {
       return {
@@ -211,9 +211,9 @@ export class Web3Service {
         goal: {
           creator: goal.creator,
           name: goal.name,
-          target: ethers.utils.formatEther(goal.target),
-          deadline: new Date(goal.deadline.toNumber() * 1000),
-          saved: ethers.utils.formatEther(goal.saved),
+          target: formatEther(goal.target),
+          deadline: new Date(Number(goal.deadline) * 1000),
+          saved: formatEther(goal.saved),
           isAchieved: goal.isAchieved
         }
       };
@@ -236,8 +236,8 @@ export class Web3Service {
         success: true,
         contributions: contributions.map((contrib: any) => ({
           contributor: contrib.contributor,
-          amount: ethers.utils.formatEther(contrib.amount),
-          timestamp: new Date(contrib.timestamp.toNumber() * 1000)
+          amount: formatEther(contrib.amount),
+          timestamp: new Date(Number(contrib.timestamp) * 1000)
         }))
       };
     } catch (error: any) {
