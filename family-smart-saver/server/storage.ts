@@ -78,16 +78,12 @@ export class MemStorage implements IStorage {
   async createGoal(insertGoal: InsertGoal): Promise<Goal> {
     const id = this.currentGoalId++;
     const goal: Goal = {
-      id: goalRow.id,
-      name: goalRow.name,
-      description: goalRow.description ?? null,
-      targetAmount: goalRow.targetAmount,
-      savedAmount: goalRow.savedAmount,
-      deadline: goalRow.deadline,
-      creatorAddress: goalRow.creatorAddress,
-      isAchieved: goalRow.isAchieved,
-      contractGoalId: goalRow.contractGoalId,
-      createdAt: goalRow.createdAt,
+      ...insertGoal,
+      id,
+      savedAmount: "0",
+      isAchieved: false,
+      contractGoalId: null,
+      createdAt: new Date()
     };
     this.goals.set(id, goal);
     return goal;
@@ -122,13 +118,9 @@ export class MemStorage implements IStorage {
   async createContribution(insertContribution: InsertContribution): Promise<Contribution> {
     const id = this.currentContributionId++;
     const contribution: Contribution = {
-      id: row.id,
-      createdAt: row.createdAt,
-      goalId: row.goalId,
-      contributorAddress: row.contributorAddress,
-      amount: row.amount,
-      transactionHash: row.transactionHash,
-      blockNumber: row.blockNumber ?? null,
+      ...insertContribution,
+      id,
+      createdAt: new Date()
     };
     this.contributions.set(id, contribution);
 
