@@ -62,7 +62,8 @@
 
   body {
     @apply bg-background text-foreground font-sans antialiased;
-    font-family: 'Inter', 'Tajawal', system-ui, sans-serif;
+
+    font-family: Inter, Tajawal, system-ui, sans-serif;
     direction: rtl;
   }
 
@@ -71,7 +72,7 @@
   }
 
   .font-arabic {
-    font-family: 'Inter', 'Tajawal', system-ui, sans-serif;
+    font-family: Inter, Tajawal, system-ui, sans-serif;
   }
 }
 
